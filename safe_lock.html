@@ -2,33 +2,32 @@
 <html lang="en">
 
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0NW5Z2MYC"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-H0NW5Z2MYC');
-    </script>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0NW5Z2MYC"></script>
+     <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+       gtag('config', 'G-H0NW5Z2MYC');
+     </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
     <link href="http://fonts.cdnfonts.com/css/looksky-font" rel="stylesheet">
-
-
+ 
+        
     <style>
-        * {
+
+        *{
             font-family: 'Looksky Font', sans-serif;
             vertical-align: middle;
             margin: 0 auto;
             text-align: center;
 
         }
-
-        body {
+        body{
             padding-top: 3%;
-            touch-action: none;
-            /*https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action*/
+            touch-action: none; /*https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action*/
         }
 
         /*--------------------------------------------------------------------------*/
@@ -41,7 +40,7 @@
             padding: 30px;
         }
 
-        /*--------------------------------------------------------------------------*/
+        /*--------------------------------------------------------------------------*/        
         #safe_num {
             width: 200px;
             height: 200px;
@@ -51,109 +50,97 @@
             background-size: contain;
             background-position: center;
         }
-
         #safe_arr {
             width: 40%;
         }
 
         /*--------------------------------------------------------------------------*/
-        #randomBox td {
+        #randomBox td{
             padding: 10px;
             width: 100px;
             height: 100px;
         }
-
-        #randomBox div {
+        #randomBox div{
             border-radius: 5px;
-            border: 6px dashed grey;
+            border: 6px dashed grey; 
             font-size: 100px;
             color: #fff;
-            text-shadow: 0 0 10px #13ba56;
+            text-shadow: 0 0 10px #13ba56; 
             background-color: black;
         }
-
-        #randomBox div::after {
+        #randomBox div::after{
             color: #13ba56;
             filter: blur(15px);
         }
 
         /*--------------------------------------------------------------------------*/
-        #bottomLine td {
+        #bottomLine td{
             padding: 10px;
         }
-
         #paint {
             border: 6px solid white;
             border-radius: 5px;
         }
-
         #predicted {
             font-size: 30px;
         }
-
         #number {
             color: #fff;
-            text-shadow: 0 0 10px #13ba56;
+            text-shadow: 0 0 10px #13ba56; 
             background-color: black;
             border: 6px solid grey;
             border-radius: 5px;
         }
 
         /*--------------------------------------------------------------------------*/
-        #match div {
+        #match div{
             width: 20px;
             height: 20px;
             border: 2px solid grey;
             border-radius: 50%;
-            background: radial-gradient(whitesmoke 6%, red 56%);
+            background: radial-gradient(whitesmoke 6%, red 56%);    
         }
-
-        #match div>div {
+        #match div > div{
             position: absolute;
-            content: "";
+            content : "";
             width: 20px;
             height: 20px;
-            border-radius: 50%;
-            opacity: 0.5;
+            border-radius:50%;
+            opacity:0.5;
             filter: blur(10px);
             background-color: red;
             z-index: 9;
             animation: backglow 5s ease infinite;
         }
-
         @keyframes backglow {
-
-            0%,
-            50%,
-            100% {
+            0%, 50%, 100% {
                 transform: scale(0.9);
-                opacity: 0.6;
-            }
-
-            25%,
-            70% {
+                opacity:0.6;
+            }  
+            25%, 70% {
                 transform: scale(1.1);
-                opacity: 0.8;
+                opacity:0.8;
             }
         }
 
         /*--------------------------------------------------------------------------*/
-        #lock {
+        #lock{
             width: 200px;
-            height: 200px;
-            border-radius: 50%;
+            height: 200px;         
+            border-radius: 50%;   
             background-position: center;
             background-size: 50%;
             background-repeat: no-repeat;
             background-image: url(safe_lock.png);
             border: 6px red dashed;
-            box-shadow: 0px 0px 25px 3px orangered inset;
-        }
+            box-shadow: 0px 0px 25px 3px orangered inset; 
+       }
 
-        /*--------------------------------------------------------------------------*/
-        #clock {
-            width: 100px;
-        }
+       /*--------------------------------------------------------------------------*/
+       #clock{
+           width: 100px;
+       }
+
     </style>
 </head>
 
@@ -164,62 +151,36 @@
 
     <table id="safe_data">
         <tr id="match">
-            <td colspan="2" rowspan="2" id="safe_num">
-                <img src="safe_arr.png" id="safe_arr">
+            <td colspan="2" rowspan="2" id="safe_num">                   
+                <img src="safe_arr.png" id="safe_arr">                    
             </td>
 
-            <td>
-                <div id="pass0">
-                    <div></div>
-                </div>
-            </td>
-            <td>
-                <div id="pass1">
-                    <div></div>
-                </div>
-            </td>
-            <td>
-                <div id="pass2">
-                    <div></div>
-                </div>
-            </td>
-            <td>
-                <div id="pass3">
-                    <div></div>
-                </div>
-            </td>
-            </td>
+            <td><div id="pass0"><div></div></div></td>
+            <td><div id="pass1"><div></div></div></td>
+            <td><div id="pass2"><div></div></div></td>
+            <td><div id="pass3"><div></div></div></td>
+        </td>
         </tr>
 
         <tr id="randomBox">
-            <td>
-                <div id="ran0"></div>
-            </td>
-            <td>
-                <div id="ran1"></div>
-            </td>
-            <td>
-                <div id="ran2"></div>
-            </td>
-            <td>
-                <div id="ran3"></div>
-            </td>
-        </tr>
+            <td><div id="ran0"></div></td>
+            <td><div id="ran1"></div></td>
+            <td><div id="ran2"></div></td>
+            <td><div id="ran3"></div></td>
+        </tr> 
 
         <tr id="bottomLine">
             <td colspan="2">
-                <div id="lock">
-                    <div></div>
-                </div>
+                <div id="lock"><div></div></div>
             </td>
 
-            <td colspan="2">
+            <td colspan="2">    
                 <div id="paint">
-                    <canvas id="myCanvas"></canvas>
+                <canvas id="myCanvas"></canvas>
                 </div>
             </td>
 
-            <td colspan="2">
+            <td colspan="2">    
                 <div id="predicted">
                     <div id="number"></div>
                 </div>
@@ -233,25 +194,25 @@
     <script>
         let tr = 0;
         let ran = [];
-        for (let i = 0; i < 4; i++) {
-            ran[i] = document.getElementById('ran' + i);
+        for(let i = 0; i < 4; i ++){
+            ran[i] = document.getElementById('ran'+ i);
             ran[i].textContent = Math.floor(Math.random() * 10);
         }
 
         let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         if (isMobile) {
-            $('#paint').css({ 'width': '60%' });
-            $('#number').css({ 'width': '30%', 'font-size': '240px' });
+        $('#paint').css({'width': '60%'});
+        $('#number').css({'width': '30%', 'font-size': '240px'});
         } else {
-            $('#paint').css({ 'width': '300px' });
-            $('#number').css({ 'width': '300px', 'font-size': '250px' });
+        $('#paint').css({'width': '300px'});
+        $('#number').css({'width': '300px', 'font-size': '250px'});
         }
 
         let cw = $('#paint').width();
-        $('#paint').css({ 'height': cw + 'px' });
+        $('#paint').css({'height': cw + 'px'});
 
         cw = $('#number').width();
-        $('#number').css({ 'height': cw + 'px' });
+        $('#number').css({'height': cw + 'px'});
 
         let canvas = document.getElementById('myCanvas');
 
@@ -270,22 +231,22 @@
             mouse.y = e.clientY - parentPosition.y;
         }, false);
 
-
+ 
         // get position for table - canvas
         function getPosition(element) {
             xPosition = 0;
             yPosition = 0;
-            while (element) {
-                xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-                yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-
-                element = element.offsetParent;
-            }
-            return {
-                x: xPosition,
-                y: yPosition
-            };
-        }
+           while (element) {
+               xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+               yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+           
+               element = element.offsetParent;
+           }
+           return {
+               x: xPosition,
+               y: yPosition
+           };
+       }
 
 
         context.lineWidth = isMobile ? 20 : 15;
@@ -320,7 +281,7 @@
             context.stroke();
         }
 
-        tf.loadLayersModel('model/model.json').then(function (model) {
+        tf.loadLayersModel('model/model.json').then(function(model) {
             window.model = model;
         });
 
@@ -344,68 +305,68 @@
             }));
         }, false);
 
-
+        
 
         let arrRotate = document.getElementById('safe_arr');
-
+        
         let rotTime = 0;
 
-        let nums = [];
-
-        function rotateBack() {
+        let nums = [];      
+        
+        function rotateBack(){
             arrRotate.style.transform = 'rotate(0deg)';
             arrRotate.style.transitionDuration = rotTime * 0.3 + 'ms';
         }
-
-        let predict = function (input) {
-
+            
+        let predict = function(input) {
+                    
             if (window.model) {
                 window.model.predict([tf.tensor(input).reshape([1, 28, 28, 1])]).array().then(function (scores) {
                     scores = scores[0];
                     predicted = scores.indexOf(Math.max(...scores));
                     $('#number').html(predicted);
                     nums.push(predicted);
-                    ran[tr] = document.getElementById('ran' + tr).textContent;
+                        ran[tr] = document.getElementById('ran'+ tr).textContent;
+  
+                        setTimeout(()=>{
+                            context.clearRect(0, 0, canvas.width, canvas.height);
+                            $('#number').html('');
+                        }, 2000);
+                        
 
-                    setTimeout(() => {
-                        context.clearRect(0, 0, canvas.width, canvas.height);
-                        $('#number').html('');
-                    }, 2000);
+                        if(ran[tr] == nums[tr]){
 
+                            let colChange = document.getElementById('pass' + tr);        
+                            
+                            colChange.lastChild.style.background = 'green';
+                            colChange.style.background = 'radial-gradient(white 6%, green 65%)';
+                            
+                            rotTime = ran[tr] * 450;
 
-                    if (ran[tr] == nums[tr]) {
-
-                        let colChange = document.getElementById('pass' + tr);
-
-                        colChange.lastChild.style.background = 'green';
-                        colChange.style.background = 'radial-gradient(white 6%, green 65%)';
-
-                        rotTime = ran[tr] * 450;
-
-                        arrRotate.style.transitionDuration = rotTime + 'ms';
-                        arrRotate.style.transform = 'rotate(' + ran[tr] * 36 + 'deg)';
-                        setTimeout(rotateBack, rotTime + 500);
-
-                        tr++;
-
-                        if (tr == 4) {
-                            // lock img change
-                            setTimeout(() => {
-                                let lockImg = document.getElementById("lock");
-                                lockImg.style.backgroundImage = "url('safe_unlock.png')";
-                                lockImg.style.border = "#13ba56 dashed 6px";
-                                lockImg.style.boxShadow = "0px 0px 25px 3px yellowgreen inset";
-                            }, rotTime + 500);
+                            arrRotate.style.transitionDuration = rotTime + 'ms';
+                            arrRotate.style.transform = 'rotate(' + ran[tr] * 36 + 'deg)';    
+                            setTimeout(rotateBack, rotTime + 500);
+                                                       
+                            tr++;
+                            
+                            if(tr == 4){
+                                // lock img change
+                                setTimeout(()=>{
+                                    let lockImg = document.getElementById("lock");
+                                    lockImg.style.backgroundImage = "url('safe_unlock.png')";
+                                    lockImg.style.border = "#13ba56 dashed 6px";
+                                    lockImg.style.boxShadow = "0px 0px 25px 3px yellowgreen inset";    
+                                }, rotTime + 500);
+                            }
+                        }else {
+                            nums.pop();
                         }
-                    } else {
-                        nums.pop();
-                    }
                 });
             } else {
-                setTimeout(function () { predict(input) }, 50);
+                setTimeout(function() { predict(input) }, 50);
             }
         }
-    </script>
+</script>
 
 </body>
 

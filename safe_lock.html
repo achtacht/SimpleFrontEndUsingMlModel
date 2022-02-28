@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0NW5Z2MYC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-H0NW5Z2MYC');
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://fonts.cdnfonts.com/css/looksky-font" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Looksky Font', sans-serif;
+            vertical-align: middle;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        body {
+            padding-top: 30px;
+            touch-action: none;
+        }
+
+        /*--------------------------------------------------------------------------*/
+        table {
+            background-color: black;
+            position: relative;
+            border-radius: 10px;
+            border: 15px solid gray;
+            table-layout: fixed;
+            padding: 30px;
+        }
+
+        /*--------------------------------------------------------------------------*/
+        #safe_num {
+            width: 200px;
+            height: 200px;
+            filter: contrast(80%);
+            background-image: url("safe_num.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        #safe_arr {
+            width: 40%;
+        }
+
+        /*--------------------------------------------------------------------------*/
+        #randomBox td {
+            padding: 10px;
+            width: 100px;
+            height: 100px;
+        }
+
+        #randomBox div {
+            border-radius: 5px;
+            border: 6px dashed grey;
+            font-size: 100px;
+            color: #fff;
+            text-shadow: 0 0 10px #13ba56;
+            background-color: black;
+        }
+
+        #randomBox div::after {
+            color: #13ba56;
+            filter: blur(15px);
+        }
+
+        /*--------------------------------------------------------------------------*/
+        #bottomLine td {
+            padding: 10px;
+        }
+
+        #paint {
+            border: 6px solid white;
+            border-radius: 5px;
+        }
+
+        #predicted {
+            font-size: 30px;
+        }
+
+        #number {
+            color: #fff;
+            text-shadow: 0 0 10px #13ba56;
+            background-color: black;
+            border: 6px solid grey;
+            border-radius: 5px;
+        }
+
+        /*--------------------------------------------------------------------------*/
+        #match div {
+            width: 20px;
+            height: 20px;
+            border: 2px solid grey;
+            border-radius: 50%;
+            background: radial-gradient(whitesmoke 6%, red 56%);
+        }
+
+        #match div>div {
+            position: absolute;
+            content: "";
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            opacity: 0.6;
+            filter: blur(10px);
+            background-color: red;
+            z-index: 9;
+            animation: backglow 5s ease infinite;
+        }
+
+        @keyframes backglow {
+
+            0%,
+            50%,
+            100% {
+                transform: scale(0.9);
+                opacity: 0.2;
+            }
+
+            25%,
+            70% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        /*--------------------------------------------------------------------------*/
+        #lock {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-position: center;
+            background-size: 50%;
+            background-repeat: no-repeat;
+            background-image: url(safe_lock.png);
+            border: 6px red dashed;
+            box-shadow: 0px 0px 15px 5px orangered inset;
+        }
+
+        /*--------------------------------------------------------------------------*/
+        #clock {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.2/dist/tf.min.js"></script>
+
+    <table id="safe_data">
+        <tr id="match">
+            <td colspan="2" rowspan="2" id="safe_num">
+                <img src="safe_arr.png" id="safe_arr">
+            </td>
+
+            <td>
+                <div id="pass0">
+                    <div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div id="pass1">
+                    <div></div>
+                </div>
+            </td>
+            <td>
+                <div id="pass2">
+                    <div></div>
+                </div>
+            </td>
+            <td>
+                <div id="pass3">
+                    <div></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr id="randomBox">
+            <td>
+                <div id="ran0"></div>
+            </td>
+            <td>
+                <div id="ran1"></div>
+            </td>
+            <td>
+                <div id="ran2"></div>
+            </td>
+            <td>
+                <div id="ran3"></div>
+            </td>
+        </tr>
+
+        <tr id="bottomLine">
+            <td colspan="2">
+                <div id="lock">
+                    <div></div>
+                </div>
+            </td>
+            <td colspan="2">
+                <div id="paint">
+                    <canvas id="myCanvas"></canvas>
+                </div>
+            </td>
+            <td colspan="2">
+                <div id="predicted">
+                    <div id="number"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+    <script>
+        let tr = 0;
+        let ran = [];
+        for (let i = 0; i < 4; i++) {
+            // 중복을 제한할 필요가 있나?
+            ran[i] = document.getElementById('ran' + i);
+            ran[i].textContent = Math.floor(Math.random() * 10);
+        }
+
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile) {
+            $('#paint').css({ 'width': '60%' });
+            $('#number').css({ 'width': '30%', 'font-size': '240px' });
+        } else {
+            $('#paint').css({ 'width': '300px' });
+            $('#number').css({ 'width': '300px', 'font-size': '250px' });
+        }
+
+        let cw = $('#paint').width();
+        $('#paint').css({ 'height': cw + 'px' });
+
+        cw = $('#number').width();
+        $('#number').css({ 'height': cw + 'px' });
+
+        let canvas = document.getElementById('myCanvas');
+
+        let context = canvas.getContext('2d');
+
+        // CanvasRenderingContext2D의 객체 리턴
+        let computedStyle = getComputedStyle(document.getElementById('paint'));
+        canvas.width = parseInt(computedStyle.getPropertyValue('width'));
+        canvas.height = parseInt(computedStyle.getPropertyValue('height'));
+
+        let mouse = { x: 0, y: 0 };
+        let paint = document.querySelector("#paint");
+        canvas.addEventListener('mousemove', function (e) {
+            let parentPosition = getPosition(paint);
+            mouse.x = e.clientX - parentPosition.x;
+            mouse.y = e.clientY - parentPosition.y;
+        }, false);
+
+        // get position for table/canvas
+        function getPosition(element) {
+            xPosition = 0;
+            yPosition = 0;
+            while (element) {
+                xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+                yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+
+                element = element.offsetParent;
+            }
+            return {
+                x: xPosition,
+                y: yPosition
+            };
+        }
+
+        // pen style
+        context.lineWidth = isMobile ? 20 : 15;
+        context.lineJoin = 'round';
+        context.lineCap = 'round';
+        context.strokeStyle = '#13ba56';
+
+        canvas.addEventListener('mousedown', function (e) {
+            context.moveTo(mouse.x, mouse.y);
+            context.beginPath();
+            canvas.addEventListener('mousemove', onPaint, false);
+        }, false);
+
+        canvas.addEventListener('mouseup', function () {
+            $('#number').html('<img id="clock" src="clock.gif"/>');
+            canvas.removeEventListener('mousemove', onPaint, false);
+            let img = new Image();
+            img.onload = function () {
+                context.drawImage(img, 0, 0, 28, 28);
+                data = context.getImageData(0, 0, 28, 28).data;
+                let input = [];
+                for (let i = 0; i < data.length; i += 4) {
+                    input.push(data[i + 2] / 255);
+                }
+                predict(input);
+            };
+            img.src = canvas.toDataURL('image/png');
+        }, false);
+
+        let onPaint = function () {
+            context.lineTo(mouse.x, mouse.y);
+            context.stroke();
+        }
+
+        tf.loadLayersModel('model/model.json').then(function (model) {
+            window.model = model;
+        });
+
+        //---------------------------------------
+        canvas.addEventListener('touchstart', function (e) {
+            let touch = e.touches[0];
+            canvas.dispatchEvent(new MouseEvent('mousedown', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            }));
+        }, false);
+        canvas.addEventListener('touchend', function (e) {
+            canvas.dispatchEvent(new MouseEvent('mouseup', {}));
+        }, false);
+        canvas.addEventListener('touchmove', function (e) {
+            let touch = e.touches[0];
+            canvas.dispatchEvent(new MouseEvent('mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            }));
+        }, false);
+
+
+        let arrRotate = document.getElementById('safe_arr');
+
+        let rotTime = 0;
+
+        let nums = [];
+
+        function rotateBack() {
+            arrRotate.style.transform = 'rotate(0deg)';
+            arrRotate.style.transitionDuration = rotTime * 0.3 + 'ms';
+        }
+
+        let predict = function (input) {
+            if (window.model) {
+                window.model.predict([tf.tensor(input).reshape([1, 28, 28, 1])]).array().then(function (scores) {
+                    scores = scores[0];
+                    predicted = scores.indexOf(Math.max(...scores));
+                    $('#number').html(predicted);
+                    nums.push(predicted);
+                    ran[tr] = document.getElementById('ran' + tr).textContent;
+
+                    setTimeout(() => {
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        $('#number').html('');
+                    }, 2000);
+
+                    if (ran[tr] == nums[tr]) {
+
+                        let colChange = document.getElementById('pass' + tr);
+
+                        colChange.lastChild.style.background = 'green';
+                        colChange.style.background = 'radial-gradient(white 6%, green 65%)';
+
+                        rotTime = ran[tr] * 450;
+
+                        arrRotate.style.transitionDuration = rotTime + 'ms';
+                        arrRotate.style.transform = 'rotate(' + ran[tr] * 36 + 'deg)';
+                        setTimeout(rotateBack, rotTime + 500);
+
+                        tr++;
+
+                        if (tr == 4) {
+                            // lock img change
+                            setTimeout(() => {
+                                let lockImg = document.getElementById("lock");
+                                lockImg.style.backgroundImage = "url('safe_unlock.png')";
+                                lockImg.style.border = " 6px green dashed";
+                                lockImg.style.boxShadow = "0px 0px 15px 5px yellowgreen inset";
+                            }, rotTime + 500);
+                        }
+                    } else {
+                        nums.pop();
+                    }
+                });
+            } else {
+                setTimeout(function () { predict(input) }, 50);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
